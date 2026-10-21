@@ -1,0 +1,636 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Air Protection | Detector de Humo y Gas para Ambientes con Polvo</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #0f766e;
+      --primary-dark: #0d5c56;
+      --primary-light: #14b8a6;
+      --dark: #0f172a;
+      --gray: #64748b;
+      --light: #f8fafc;
+      --white: #ffffff;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', system-ui, -apple-system, sans-serif;
+      color: var(--dark);
+      background: var(--white);
+      line-height: 1.65;
+    }
+
+    header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      background: rgba(255, 255, 255, 0.96);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid #e2e8f0;
+      z-index: 100;
+      padding: 0.9rem 0;
+    }
+
+    .container {
+      max-width: 1080px;
+      margin: 0 auto;
+      padding: 0 1.5rem;
+    }
+
+    .nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      font-weight: 800;
+      font-size: 1.3rem;
+      color: var(--primary);
+      text-decoration: none;
+    }
+
+    .logo-icon {
+      width: 38px;
+      height: 38px;
+      background: linear-gradient(135deg, var(--primary), var(--primary-light));
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-size: 1.15rem;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      padding: 0.75rem 1.6rem;
+      border-radius: 10px;
+      font-weight: 600;
+      font-size: 0.95rem;
+      text-decoration: none;
+      border: none;
+      cursor: default;
+      transition: all 0.2s;
+    }
+
+    .btn-primary {
+      background: var(--primary);
+      color: white;
+    }
+
+    .btn-primary:hover {
+      background: var(--primary-dark);
+    }
+
+    /* Hero */
+    .hero {
+      padding: 8.5rem 0 4.5rem;
+      background: linear-gradient(180deg, #f0fdfa 0%, #ffffff 100%);
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 3.5rem;
+      align-items: center;
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      background: #ccfbf1;
+      color: var(--primary);
+      padding: 0.4rem 1rem;
+      border-radius: 50px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      margin-bottom: 1.3rem;
+    }
+
+    .hero h1 {
+      font-size: 2.8rem;
+      font-weight: 800;
+      line-height: 1.15;
+      margin-bottom: 1.3rem;
+      letter-spacing: -0.02em;
+    }
+
+    .hero h1 span {
+      color: var(--primary);
+    }
+
+    .hero-desc {
+      font-size: 1.12rem;
+      color: var(--gray);
+      margin-bottom: 0;
+      max-width: 480px;
+    }
+
+    /* Product visual */
+    .product-card {
+      background: white;
+      border-radius: 22px;
+      padding: 2rem;
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.1);
+      border: 1px solid #e2e8f0;
+      position: relative;
+    }
+
+    .product-visual {
+      width: 100%;
+      height: 280px;
+      background: linear-gradient(145deg, #0f766e, #134e4a);
+      border-radius: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .product-visual::before {
+      content: '';
+      position: absolute;
+      width: 160px;
+      height: 160px;
+      background: rgba(255,255,255,0.07);
+      border-radius: 50%;
+      top: -25px;
+      right: -25px;
+    }
+
+    .detector-body {
+      width: 120px;
+      height: 120px;
+      background: #1e293b;
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 18px 35px rgba(0,0,0,0.35);
+      position: relative;
+      z-index: 2;
+      border: 3px solid #334155;
+    }
+
+    .detector-inner {
+      width: 74px;
+      height: 74px;
+      background: linear-gradient(145deg, #334155, #1e293b);
+      border-radius: 10px;
+      border: 3px solid #14b8a6;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      animation: pulse 2.8s infinite;
+    }
+
+    .detector-icon {
+      font-size: 1.9rem;
+    }
+
+    @keyframes pulse {
+      0%, 100% { box-shadow: 0 0 0 0 rgba(20, 184, 166, 0.4); }
+      50% { box-shadow: 0 0 0 14px rgba(20, 184, 166, 0); }
+    }
+
+    .ip-badge {
+      position: absolute;
+      bottom: 1rem;
+      left: 1rem;
+      background: rgba(15, 23, 42, 0.85);
+      color: #94a3b8;
+      font-size: 0.72rem;
+      font-weight: 600;
+      padding: 0.25rem 0.6rem;
+      border-radius: 6px;
+    }
+
+    /* About */
+    .about {
+      padding: 4.5rem 0;
+    }
+
+    .section-header {
+      text-align: center;
+      max-width: 620px;
+      margin: 0 auto 3rem;
+    }
+
+    .section-header h2 {
+      font-size: 2.1rem;
+      font-weight: 800;
+      margin-bottom: 0.7rem;
+      letter-spacing: -0.02em;
+    }
+
+    .section-header p {
+      color: var(--gray);
+      font-size: 1.08rem;
+    }
+
+    .about-text {
+      max-width: 720px;
+      margin: 0 auto;
+      font-size: 1.05rem;
+      color: #475569;
+      text-align: center;
+    }
+
+    .about-text p {
+      margin-bottom: 1.2rem;
+    }
+
+    /* Features */
+    .features {
+      padding: 4.5rem 0;
+      background: var(--light);
+    }
+
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+    }
+
+    .feature-card {
+      background: white;
+      border-radius: 14px;
+      padding: 1.6rem;
+      border: 1px solid #e2e8f0;
+    }
+
+    .feature-icon {
+      width: 48px;
+      height: 48px;
+      background: #ccfbf1;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.35rem;
+      margin-bottom: 1rem;
+    }
+
+    .feature-card h3 {
+      font-size: 1.08rem;
+      font-weight: 700;
+      margin-bottom: 0.4rem;
+    }
+
+    .feature-card p {
+      color: var(--gray);
+      font-size: 0.92rem;
+    }
+
+    /* Environments */
+    .environments {
+      padding: 4.5rem 0;
+    }
+
+    .env-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1.3rem;
+    }
+
+    .env-card {
+      background: var(--light);
+      border-radius: 14px;
+      padding: 1.5rem 1.2rem;
+      text-align: center;
+      border: 1px solid #e2e8f0;
+    }
+
+    .env-card .icon {
+      font-size: 1.9rem;
+      margin-bottom: 0.6rem;
+    }
+
+    .env-card h4 {
+      font-size: 0.98rem;
+      font-weight: 700;
+      margin-bottom: 0.25rem;
+    }
+
+    .env-card p {
+      font-size: 0.84rem;
+      color: var(--gray);
+    }
+
+    /* Specs */
+    .specs {
+      padding: 4.5rem 0;
+      background: var(--dark);
+      color: white;
+    }
+
+    .specs .section-header h2 {
+      color: white;
+    }
+
+    .specs .section-header p {
+      color: #94a3b8;
+    }
+
+    .specs-list {
+      max-width: 640px;
+      margin: 0 auto;
+      list-style: none;
+    }
+
+    .specs-list li {
+      display: flex;
+      gap: 1rem;
+      padding: 1rem 0;
+      border-bottom: 1px solid #1e293b;
+    }
+
+    .specs-list li:last-child {
+      border-bottom: none;
+    }
+
+    .specs-list .check {
+      flex-shrink: 0;
+      width: 26px;
+      height: 26px;
+      background: var(--primary-light);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.8rem;
+      color: white;
+      margin-top: 2px;
+    }
+
+    .specs-list h4 {
+      font-size: 1.02rem;
+      font-weight: 600;
+      margin-bottom: 0.15rem;
+    }
+
+    .specs-list p {
+      color: #94a3b8;
+      font-size: 0.9rem;
+    }
+
+    /* Buy section (decorative, non-functional) */
+    .buy {
+      padding: 4.5rem 0;
+      text-align: center;
+    }
+
+    .buy h2 {
+      font-size: 1.9rem;
+      font-weight: 800;
+      margin-bottom: 0.8rem;
+    }
+
+    .buy p {
+      color: var(--gray);
+      margin-bottom: 1.8rem;
+      font-size: 1.05rem;
+    }
+
+    footer {
+      background: #0f172a;
+      color: #94a3b8;
+      padding: 2.5rem 0;
+      text-align: center;
+      font-size: 0.9rem;
+    }
+
+    @media (max-width: 900px) {
+      .hero-grid {
+        grid-template-columns: 1fr;
+        gap: 2.5rem;
+      }
+
+      .hero h1 {
+        font-size: 2.3rem;
+      }
+
+      .features-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .env-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+
+    @media (max-width: 500px) {
+      .env-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+  <header>
+    <div class="container">
+      <nav class="nav">
+        <a href="#" class="logo">
+          <div class="logo-icon">🛡️</div>
+          Air Protection
+        </a>
+        <a href="#comprar" class="btn btn-primary">Comprar</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Hero -->
+  <section class="hero">
+    <div class="container">
+      <div class="hero-grid">
+        <div>
+          <div class="hero-badge">Proyecto Air Protection</div>
+          <h1>Detector de humo y gas<br>para <span>ambientes con polvo</span></h1>
+          <p class="hero-desc">
+            Air Protection es un sistema de detección de humo y gases diseñado específicamente para talleres, obras y espacios con alta concentración de polvo, viruta y partículas en suspensión.
+          </p>
+        </div>
+
+        <div class="product-card">
+          <div class="product-visual">
+            <div class="detector-body">
+              <div class="detector-inner">
+                <span class="detector-icon">💨</span>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- About the project -->
+  <section class="about">
+    <div class="container">
+      <div class="section-header">
+        <h2>Sobre el proyecto</h2>
+        <p>Qué es Air Protection y para qué sirve</p>
+      </div>
+      <div class="about-text">
+        <p>
+          Air Protection nace como una solución de seguridad para entornos de trabajo exigentes, 
+          donde los detectores convencionales de hogar no son suficientes. En talleres, sitios de 
+          producción y obras (como el Sitio 0) el polvo, la viruta, los vapores y el ruido forman 
+          parte del día a día.
+        </p>
+        <p>
+          Este detector combina sensores de humo y de gas en un mismo equipo, pensado para 
+          funcionar de forma confiable en ambientes con polvo, viruta y condiciones exigentes de trabajo.
+        </p>
+        <p>
+          El objetivo del proyecto es ofrecer una herramienta simple, robusta y confiable para 
+          detectar a tiempo situaciones de riesgo por humo, monóxido de carbono o fugas de gas 
+          en ambientes industriales y de taller.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Features -->
+  <section class="features">
+    <div class="container">
+      <div class="section-header">
+        <h2>Características principales</h2>
+        <p>Pensado para aguantar condiciones reales de trabajo</p>
+      </div>
+
+      <div class="features-grid">
+        <div class="feature-card">
+          <div class="feature-icon">🔥</div>
+          <h3>Detección de humo</h3>
+          <p>Sensores preparados para humo de soldadura, sobrecalentamiento y materiales en combustión.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">⛽</div>
+          <h3>Detección de gas y CO</h3>
+          <p>Identifica fugas de gas, vapores y monóxido de carbono en espacios cerrados de trabajo.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">🔋</div>
+          <h3>Alimentación dual</h3>
+          <p>Puede funcionar con batería de larga duración o conectado a la red eléctrica.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Environments -->
+  <section class="environments">
+    <div class="container">
+      <div class="section-header">
+        <h2>Entornos de uso</h2>
+        <p>Dónde se aplica Air Protection</p>
+      </div>
+      <div class="env-grid">
+        <div class="env-card">
+          <div class="icon">🔧</div>
+          <h4>Talleres mecánicos</h4>
+          <p>Viruta, aceites y gases de soldadura</p>
+        </div>
+        <div class="env-card">
+          <div class="icon">🏗️</div>
+          <h4>Obras y construcciones</h4>
+          <p>Polvo de cemento, madera y materiales</p>
+        </div>
+        <div class="env-card">
+          <div class="icon">🏭</div>
+          <h4>Naves industriales</h4>
+          <p>Ambientes con partículas en suspensión</p>
+        </div>
+        <div class="env-card">
+          <div class="icon">⚙️</div>
+          <h4>Sitios de producción</h4>
+          <p>Como el Sitio 0 y áreas similares</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Specs -->
+  <section class="specs">
+    <div class="container">
+      <div class="section-header">
+        <h2>Puntos clave del sistema</h2>
+        <p>Lo que diferencia a Air Protection</p>
+      </div>
+      <ul class="specs-list">
+        <li>
+          <div class="check">✓</div>
+          <div>
+            <h4>Resistente al polvo</h4>
+            <p>Diseñado para no fallar por acumulación de partículas, a diferencia de detectores de uso doméstico.</p>
+          </div>
+        </li>
+        <li>
+          <div class="check">✓</div>
+          <div>
+            <h4>Menos falsas alarmas</h4>
+            <p>Algoritmo que ayuda a distinguir polvo en suspensión de humo real, reduciendo interrupciones innecesarias.</p>
+          </div>
+        </li>
+        <li>
+          <div class="check">✓</div>
+          <div>
+            <h4>Instalación simple</h4>
+            <p>Montaje en techo o pared con soporte robusto, pensado para entornos de trabajo.</p>
+          </div>
+        </li>
+        <li>
+          <div class="check">✓</div>
+          <div>
+            <h4>Monitoreo continuo</h4>
+            <p>Funciona las 24 horas para detectar a tiempo situaciones de riesgo en el área de trabajo.</p>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- Buy button (non-functional) -->
+  <section class="buy" id="comprar">
+    <div class="container">
+      <h2>Air Protection</h2>
+      <p>Detector de humo y gas para talleres y ambientes con polvo</p>
+      <a href="javascript:void(0)" class="btn btn-primary" onclick="return false;">Comprar</a>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <div class="container">
+      <p>Air Protection · Proyecto de detector de humo y gas</p>
+      <p style="margin-top: 0.4rem; font-size: 0.85rem;">Página informativa del proyecto</p>
+    </div>
+  </footer>
+
+</body>
+</html>
